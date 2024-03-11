@@ -7,6 +7,8 @@ import CustomButton from "@/components/Button";
 import RangeSelector from "@/components/RangeSelector";
 import ImageGridSkeleton from "@/components/Skeleton";
 import PhotoGallery from "@/components/PhotoGallery";
+import Sidebar from "@/components/SideBar";
+import ContentArea from "@/components/ContentArea";
 
 export default function AlbumViewer() {
   const [photos, setPhotos] = useState<any>({
@@ -271,109 +273,8 @@ export default function AlbumViewer() {
   return (
     <div>
       <div className="flex flex-row gap-5">
-        <div className="lg:w-[25%]">
-          <div className="border-[#D1D1D6] border rounded-lg p-5 lg:h-screen xl:h-screen md:h-screen">
-            <img
-              src="/assets/svgs/logo.svg"
-              width={200}
-              height={200}
-              alt="Distal Humerus Fracture"
-              className="w-[350px]"
-            />
-            <p className="mt-10 font-[600] text-[15px]">Classes filter</p>
-            <p className="mt-10">
-              {selection.map((item, index: number) => (
-                <Link
-                  key={index}
-                  href={"#"}
-                  onClick={item.handleOnSelect}
-                  className={`me-5 ${
-                    item.tab === selected ? "text-[#2081D2]" : "text-gray-400"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </p>
-            <div className="mt-3 flex-wrap gap-4 flex">
-              {classFilterButtons.map((filteredButton, index: number) => (
-                  <CustomButton
-                    key={index}
-                    onClick={filteredButton.onclick}
-                    buttonColor={`${filteredButton.btnColor} 
-                        ${
-                          selectedClassFilter.includes(filteredButton.btnName)
-                            ? "active"
-                            : ""
-                        }`}
-                    type="button"
-                  >
-                    {filteredButton.label}
-                  </CustomButton>
-              ))}
-            </div>
-            <div>
-              <p className="font-[600] mt-5">Poligon range</p>
-              <RangeSelector
-                onRangeUpdate={handleRangeSelector}
-                minimumValue={selectedMinRange}
-                updateMinimumValue={setSelectedMinRange}
-                maximumValue={selectedMaxRange}
-                updateMaximumValue={setSelectedMaxRange}
-              />
-              <div className="flex justify-between mt-5 px-5">
-                <div
-                  className="font-[600] cursor-pointer"
-                  onClick={clearFilters}
-                >
-                  <i className="bi bi-trash" />
-                  Clear filters{" "}
-                </div>
-                <div className="text-gray-400 cursor-pointer">Need help? </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="lg:w-[75%]">
-          <div className="px-5">
-            <div className="flex justify-between">
-              <div className="text-[32px] font-[600] ">
-                Bone-fracture-detection{" "}
-              </div>
-              <div className="mt-3">
-                <span>
-                  {" "}
-                  <span className="font-[600]">
-                    {displayImageRange()} images
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div className="flex border-b border-gray-300 mt-5">
-              {menus.map((menu, index: number) => (
-                <button
-                  key={index}
-                  onClick={menu.handleOnclick}
-                  className={`${
-                    tab == menu.tab
-                      ? "font-semibold text-[#FFD75C] border-b-2 border-[#FFD75C] bg-[#ffd75c42]"
-                      : "text-gray-700 text-[#041D32] hover:text-[#FFD75C] hover:border-b-2 hover:border-[#FFD75C]"
-                  } px-6 pt-2 focus:outline-none`}
-                >
-                  {menu.label}
-                </button>
-              ))}
-            </div>
-            <div className="flex justify-center mt-5">
-              {isLoading ? (
-                <ImageGridSkeleton count={54} />
-              ) : (
-                getTabContent(tab)
-              )}
-            </div>
-          </div>
-        </div>
+        <Sidebar />
+        <ContentArea />
       </div>
     </div>
   );
